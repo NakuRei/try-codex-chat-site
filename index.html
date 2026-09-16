@@ -3,149 +3,244 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Codex Chat を試すためのシンプルなデモサイト" />
-  <title>Codex Chat Lab</title>
+  <meta name="description" content="雑なアイデアを投げて遊ぶ、小さなAI開発実験室。" />
+  <title>Codex Playground — Tiny AI Lab</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@500;600;700;800&family=Noto+Sans+JP:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="page-shell">
-    <header class="site-header">
-      <a class="brand" href="#top" aria-label="Codex Chat Lab home">
-        <span class="brand-mark" aria-hidden="true">C</span>
-        <span>Codex Chat Lab</span>
-      </a>
-      <nav class="nav" aria-label="メインナビゲーション">
-        <a href="#features">Features</a>
-        <a href="#workflow">Workflow</a>
-        <a href="#demo">Demo</a>
-      </nav>
-      <a class="button button-small button-ghost" href="https://github.com/NakuRei/try-codex-chat-site" target="_blank" rel="noreferrer">GitHub</a>
-    </header>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
 
-    <main id="top">
-      <section class="hero section">
-        <div class="hero-copy">
-          <span class="eyebrow">AI × DEVELOPMENT</span>
-          <h1>コードを書く時間を、<br /><span>考える時間</span>へ。</h1>
-          <p class="hero-description">
-            Codex と対話しながら、実装・修正・レビューまで進めるための小さな実験場。
-            アイデアから動くコードまでの距離を短くします。
-          </p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="#demo">デモを見る</a>
-            <a class="button button-link" href="#workflow">使い方を見る <span aria-hidden="true">→</span></a>
-          </div>
-          <div class="hero-meta" aria-label="特徴">
-            <div><strong>0</strong><span>setup</span></div>
-            <div><strong>3</strong><span>steps</span></div>
-            <div><strong>∞</strong><span>ideas</span></div>
-          </div>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Codex Playground home">
+      <span class="brand-symbol">C/</span>
+      <span>CODEX PLAYGROUND</span>
+    </a>
+
+    <div class="lab-status" aria-label="lab status online">
+      <span class="pulse-dot"></span>
+      LAB ONLINE
+    </div>
+
+    <button class="chaos-toggle" id="chaos-toggle" type="button" aria-pressed="false">
+      <span>CHAOS</span>
+      <span class="toggle-track"><span class="toggle-knob"></span></span>
+    </button>
+  </header>
+
+  <main id="top">
+    <section class="hero section">
+      <div class="hero-copy">
+        <div class="sticker-row" aria-hidden="true">
+          <span class="sticker sticker-yellow">BUILD WEIRD THINGS</span>
+          <span class="sticker sticker-pink">NO ROADMAP</span>
         </div>
 
-        <div class="hero-visual" aria-label="Codex Chat のUIイメージ">
-          <div class="glow glow-one"></div>
-          <div class="glow glow-two"></div>
-          <div class="chat-card">
-            <div class="window-bar">
-              <span class="window-dot"></span>
-              <span class="window-dot"></span>
-              <span class="window-dot"></span>
-              <span class="window-title">codex-session</span>
-            </div>
-            <div class="chat-body">
-              <div class="message message-user">
-                <span class="message-label">YOU</span>
-                <p>このカード一覧をレスポンシブにして。</p>
+        <p class="kicker">TINY AI DEVELOPMENT LAB / EST. 2026</p>
+        <h1>
+          雑なアイデアを、<br />
+          <span class="scribble-wrap">雑なまま</span><br />
+          投げてみる。
+        </h1>
+        <p class="hero-lead">
+          ちゃんとした要件定義は、あとでいい。思いつきをコードにして、壊して、直して、
+          「思ってたのと違う」を楽しむための小さな実験場です。
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#roulette">実験をはじめる <span>↘</span></a>
+          <button class="btn btn-secondary" id="surprise-me" type="button">何か起こして</button>
+        </div>
+
+        <div class="lab-metrics" aria-label="lab metrics">
+          <div><span class="metric-value" id="experiment-count">042</span><span class="metric-label">EXPERIMENTS</span></div>
+          <div><span class="metric-value">13</span><span class="metric-label">GOOD IDEAS</span></div>
+          <div><span class="metric-value">29</span><span class="metric-label">ACCIDENTS</span></div>
+        </div>
+      </div>
+
+      <div class="hero-machine" aria-label="AI lab terminal">
+        <div class="floating-note note-one">works on my machine</div>
+        <div class="floating-note note-two">ship it?</div>
+        <div class="floating-note note-three">¯\\_(ツ)_/¯</div>
+
+        <div class="terminal-card tilt-card" id="terminal-card">
+          <div class="terminal-topbar">
+            <div class="traffic-lights" aria-hidden="true"><i></i><i></i><i></i></div>
+            <span>lab://experiment-042</span>
+            <span class="battery">87%</span>
+          </div>
+
+          <div class="terminal-body">
+            <div class="terminal-line muted">$ codex run --idea "雑な何か"</div>
+            <div class="terminal-line"><span class="prompt-char">›</span> 仕様が曖昧です。</div>
+            <div class="terminal-line"><span class="prompt-char">›</span> なので勝手に面白くします。</div>
+
+            <div class="mini-preview">
+              <div class="preview-orb"></div>
+              <div class="preview-copy">
+                <span>GENERATING STRANGE UI...</span>
+                <strong id="terminal-output">a tiny dashboard for impossible ideas</strong>
               </div>
-              <div class="message message-ai">
-                <span class="message-label">CODEX</span>
-                <p>グリッドを <code>repeat(auto-fit, minmax())</code> に変更し、狭い画面では1列にします。</p>
-                <div class="code-block">
-                  <span>.cards {</span>
-                  <span>&nbsp;&nbsp;display: grid;</span>
-                  <span>&nbsp;&nbsp;grid-template-columns:</span>
-                  <span>&nbsp;&nbsp;&nbsp;&nbsp;repeat(auto-fit, minmax(240px, 1fr));</span>
-                  <span>}</span>
-                </div>
-              </div>
-              <div class="status-line"><span class="status-dot"></span> Ready to apply</div>
+            </div>
+
+            <div class="terminal-progress"><span id="terminal-progress"></span></div>
+            <div class="terminal-footer">
+              <span><i class="live-dot"></i> agent awake</span>
+              <button id="reroll-terminal" type="button">REROLL ↻</button>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section" id="features">
-        <div class="section-heading">
-          <span class="eyebrow">FEATURES</span>
-          <h2>会話から、実装へ。</h2>
-          <p>仕様整理からコード変更まで、開発の流れをひとつの会話につなげます。</p>
-        </div>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <span class="feature-number">01</span>
-            <h3>Context aware</h3>
-            <p>リポジトリの構成や既存コードを踏まえて、変更箇所を判断します。</p>
-          </article>
-          <article class="feature-card featured">
-            <span class="feature-number">02</span>
-            <h3>Fast iteration</h3>
-            <p>要望を追加しながら、実装と修正を短いサイクルで繰り返せます。</p>
-          </article>
-          <article class="feature-card">
-            <span class="feature-number">03</span>
-            <h3>Review friendly</h3>
-            <p>変更内容を追いやすくし、レビューや次の改善につなげます。</p>
-          </article>
-        </div>
-      </section>
+    <section class="ticker" aria-label="playground messages">
+      <div class="ticker-track">
+        <span>MAKE SOMETHING USELESS</span><i>✦</i>
+        <span>BREAK IT ON PURPOSE</span><i>✦</i>
+        <span>ASK A BETTER QUESTION</span><i>✦</i>
+        <span>SHIP THE WEIRD VERSION</span><i>✦</i>
+        <span>MAKE SOMETHING USELESS</span><i>✦</i>
+        <span>BREAK IT ON PURPOSE</span><i>✦</i>
+        <span>ASK A BETTER QUESTION</span><i>✦</i>
+        <span>SHIP THE WEIRD VERSION</span><i>✦</i>
+      </div>
+    </section>
 
-      <section class="section workflow-section" id="workflow">
-        <div class="section-heading align-left">
-          <span class="eyebrow">WORKFLOW</span>
-          <h2>3ステップで始める。</h2>
-        </div>
-        <ol class="workflow-list">
-          <li>
-            <span class="workflow-index">1</span>
-            <div><h3>リポジトリを選ぶ</h3><p>既存プロジェクトでも、空のリポジトリでも構いません。</p></div>
-          </li>
-          <li>
-            <span class="workflow-index">2</span>
-            <div><h3>やりたいことを書く</h3><p>実装したい画面、直したいバグ、改善したい設計を自然文で伝えます。</p></div>
-          </li>
-          <li>
-            <span class="workflow-index">3</span>
-            <div><h3>差分を確認する</h3><p>変更されたコードを確認し、そのまま次の指示へ進めます。</p></div>
-          </li>
-        </ol>
-      </section>
+    <section class="section experiments" id="experiments">
+      <div class="section-label"><span>01</span> TODAY'S EXPERIMENTS</div>
+      <div class="section-title-row">
+        <h2>今日は何を<br />壊しますか？</h2>
+        <p>成功する必要はありません。クリックすると各実験が勝手に進捗します。</p>
+      </div>
 
-      <section class="section demo-section" id="demo">
-        <div class="demo-panel">
-          <div>
-            <span class="eyebrow">TRY IT</span>
-            <h2>何を作りますか？</h2>
-            <p>下の入力欄はフロントエンドのみの簡易デモです。入力するとサンプル応答を表示します。</p>
+      <div class="experiment-grid">
+        <article class="experiment-card exp-lime" data-experiment="UI Mutation">
+          <div class="exp-head"><span>EXP-01</span><span class="exp-icon">↗</span></div>
+          <div class="exp-visual visual-ui" aria-hidden="true">
+            <div></div><div></div><div></div><div></div>
           </div>
-          <form class="prompt-box" id="prompt-form">
-            <label class="sr-only" for="prompt-input">作りたいものを入力</label>
-            <textarea id="prompt-input" rows="3" placeholder="例：シンプルなダッシュボードを作って"></textarea>
-            <button class="button button-primary" type="submit">送信</button>
-          </form>
-          <div class="demo-response" id="demo-response" hidden aria-live="polite"></div>
+          <h3>UIを突然変異させる</h3>
+          <p>普通の画面を入力すると、少しだけ変なインターフェースにします。</p>
+          <button class="exp-button" type="button">RUN EXPERIMENT</button>
+        </article>
+
+        <article class="experiment-card exp-blue" data-experiment="Bug Injection">
+          <div class="exp-head"><span>EXP-02</span><span class="exp-icon">⌁</span></div>
+          <div class="exp-visual bug-window" aria-hidden="true">
+            <span>if (works) {</span>
+            <span>&nbsp;&nbsp;break();</span>
+            <span>}</span>
+            <b>BUG!</b>
+          </div>
+          <h3>バグを1個だけ混ぜる</h3>
+          <p>動いているコードに、嫌だけど見つけると楽しいバグを忍ばせます。</p>
+          <button class="exp-button" type="button">INJECT BUG</button>
+        </article>
+
+        <article class="experiment-card exp-pink" data-experiment="Vague Prompt">
+          <div class="exp-head"><span>EXP-03</span><span class="exp-icon">✦</span></div>
+          <div class="exp-visual blob-field" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <h3>雑な依頼を仕様にする</h3>
+          <p>「なんかいい感じに」を、勝手な解釈と少しの自信で形にします。</p>
+          <button class="exp-button" type="button">MAKE IT SPECIFIC</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="section roulette-section" id="roulette">
+      <div class="roulette-shell">
+        <div class="roulette-copy">
+          <div class="section-label light"><span>02</span> PROMPT ROULETTE</div>
+          <h2>考えるのが面倒なら、<br />機械に決めさせる。</h2>
+          <p>3つの材料をランダムに混ぜて、今日作るものを決めます。役に立つ保証はありません。</p>
+
+          <div class="roulette-controls">
+            <button class="btn btn-white" id="spin-roulette" type="button">SPIN THE MACHINE ↻</button>
+            <button class="text-button" id="copy-prompt" type="button">COPY PROMPT</button>
+          </div>
         </div>
-      </section>
-    </main>
 
-    <footer class="site-footer">
-      <span>Codex Chat Lab</span>
-      <span>Built as a small experiment.</span>
-    </footer>
-  </div>
+        <div class="roulette-machine">
+          <div class="roulette-column">
+            <span class="roulette-label">MAKE A</span>
+            <strong id="roulette-a">dashboard</strong>
+          </div>
+          <div class="plus">+</div>
+          <div class="roulette-column">
+            <span class="roulette-label">FOR</span>
+            <strong id="roulette-b">people who forget things</strong>
+          </div>
+          <div class="plus">+</div>
+          <div class="roulette-column">
+            <span class="roulette-label">BUT</span>
+            <strong id="roulette-c">it behaves like a game</strong>
+          </div>
 
+          <div class="result-strip">
+            <span>PROMPT</span>
+            <p id="roulette-result">忘れっぽい人向けのダッシュボードを、ゲームのように振る舞うUIで作って。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section manifesto">
+      <div class="manifesto-card">
+        <span class="giant-quote">“</span>
+        <p>
+          最初から正解を作ろうとすると、<br />
+          だいたい<span>退屈な正解</span>になる。
+        </p>
+        <small>— probably someone in the lab</small>
+      </div>
+    </section>
+
+    <section class="section console-section" id="console">
+      <div class="console-head">
+        <div>
+          <div class="section-label"><span>03</span> LAB CONSOLE</div>
+          <h2>最後に、何か<br />投げて帰る。</h2>
+        </div>
+        <p>本物のAIにはつながっていません。代わりに、このページが少しだけ勝手な返事をします。</p>
+      </div>
+
+      <div class="console-panel">
+        <form id="prompt-form" class="console-form">
+          <label for="prompt-input">YOUR QUESTION / IDEA / BAD PLAN</label>
+          <div class="input-wrap">
+            <textarea id="prompt-input" rows="4" placeholder="例：会議をRPGみたいにしたい"></textarea>
+            <button class="send-button" type="submit" aria-label="send prompt">↗</button>
+          </div>
+        </form>
+
+        <div class="mood-row" aria-label="response mood">
+          <span>RESPONSE MODE</span>
+          <button class="mood-chip active" data-mood="normal" type="button">NORMAL</button>
+          <button class="mood-chip" data-mood="hype" type="button">TOO POSITIVE</button>
+          <button class="mood-chip" data-mood="critic" type="button">GRUMPY REVIEWER</button>
+          <button class="mood-chip" data-mood="weird" type="button">WEIRD</button>
+        </div>
+
+        <div class="console-response" id="demo-response" aria-live="polite">
+          <span class="response-prefix">CODEX-ish</span>
+          <p>入力待ち。まともな依頼でも、まともじゃない依頼でもどうぞ。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div><strong>CODEX PLAYGROUND</strong><span>tiny experiments, questionable outcomes.</span></div>
+    <a href="https://github.com/NakuRei/try-codex-chat-site" target="_blank" rel="noreferrer">VIEW SOURCE ↗</a>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="script.js"></script>
 </body>
 </html>
