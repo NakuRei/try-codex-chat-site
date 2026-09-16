@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Codex Chat を試すためのシンプルなデモサイト" />
+  <title>Codex Chat Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Codex Chat Lab home">
+        <span class="brand-mark" aria-hidden="true">C</span>
+        <span>Codex Chat Lab</span>
+      </a>
+      <nav class="nav" aria-label="メインナビゲーション">
+        <a href="#features">Features</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#demo">Demo</a>
+      </nav>
+      <a class="button button-small button-ghost" href="https://github.com/NakuRei/try-codex-chat-site" target="_blank" rel="noreferrer">GitHub</a>
+    </header>
+
+    <main id="top">
+      <section class="hero section">
+        <div class="hero-copy">
+          <span class="eyebrow">AI × DEVELOPMENT</span>
+          <h1>コードを書く時間を、<br /><span>考える時間</span>へ。</h1>
+          <p class="hero-description">
+            Codex と対話しながら、実装・修正・レビューまで進めるための小さな実験場。
+            アイデアから動くコードまでの距離を短くします。
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#demo">デモを見る</a>
+            <a class="button button-link" href="#workflow">使い方を見る <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="hero-meta" aria-label="特徴">
+            <div><strong>0</strong><span>setup</span></div>
+            <div><strong>3</strong><span>steps</span></div>
+            <div><strong>∞</strong><span>ideas</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Codex Chat のUIイメージ">
+          <div class="glow glow-one"></div>
+          <div class="glow glow-two"></div>
+          <div class="chat-card">
+            <div class="window-bar">
+              <span class="window-dot"></span>
+              <span class="window-dot"></span>
+              <span class="window-dot"></span>
+              <span class="window-title">codex-session</span>
+            </div>
+            <div class="chat-body">
+              <div class="message message-user">
+                <span class="message-label">YOU</span>
+                <p>このカード一覧をレスポンシブにして。</p>
+              </div>
+              <div class="message message-ai">
+                <span class="message-label">CODEX</span>
+                <p>グリッドを <code>repeat(auto-fit, minmax())</code> に変更し、狭い画面では1列にします。</p>
+                <div class="code-block">
+                  <span>.cards {</span>
+                  <span>&nbsp;&nbsp;display: grid;</span>
+                  <span>&nbsp;&nbsp;grid-template-columns:</span>
+                  <span>&nbsp;&nbsp;&nbsp;&nbsp;repeat(auto-fit, minmax(240px, 1fr));</span>
+                  <span>}</span>
+                </div>
+              </div>
+              <div class="status-line"><span class="status-dot"></span> Ready to apply</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <div class="section-heading">
+          <span class="eyebrow">FEATURES</span>
+          <h2>会話から、実装へ。</h2>
+          <p>仕様整理からコード変更まで、開発の流れをひとつの会話につなげます。</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="feature-number">01</span>
+            <h3>Context aware</h3>
+            <p>リポジトリの構成や既存コードを踏まえて、変更箇所を判断します。</p>
+          </article>
+          <article class="feature-card featured">
+            <span class="feature-number">02</span>
+            <h3>Fast iteration</h3>
+            <p>要望を追加しながら、実装と修正を短いサイクルで繰り返せます。</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-number">03</span>
+            <h3>Review friendly</h3>
+            <p>変更内容を追いやすくし、レビューや次の改善につなげます。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section workflow-section" id="workflow">
+        <div class="section-heading align-left">
+          <span class="eyebrow">WORKFLOW</span>
+          <h2>3ステップで始める。</h2>
+        </div>
+        <ol class="workflow-list">
+          <li>
+            <span class="workflow-index">1</span>
+            <div><h3>リポジトリを選ぶ</h3><p>既存プロジェクトでも、空のリポジトリでも構いません。</p></div>
+          </li>
+          <li>
+            <span class="workflow-index">2</span>
+            <div><h3>やりたいことを書く</h3><p>実装したい画面、直したいバグ、改善したい設計を自然文で伝えます。</p></div>
+          </li>
+          <li>
+            <span class="workflow-index">3</span>
+            <div><h3>差分を確認する</h3><p>変更されたコードを確認し、そのまま次の指示へ進めます。</p></div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section demo-section" id="demo">
+        <div class="demo-panel">
+          <div>
+            <span class="eyebrow">TRY IT</span>
+            <h2>何を作りますか？</h2>
+            <p>下の入力欄はフロントエンドのみの簡易デモです。入力するとサンプル応答を表示します。</p>
+          </div>
+          <form class="prompt-box" id="prompt-form">
+            <label class="sr-only" for="prompt-input">作りたいものを入力</label>
+            <textarea id="prompt-input" rows="3" placeholder="例：シンプルなダッシュボードを作って"></textarea>
+            <button class="button button-primary" type="submit">送信</button>
+          </form>
+          <div class="demo-response" id="demo-response" hidden aria-live="polite"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Codex Chat Lab</span>
+      <span>Built as a small experiment.</span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
